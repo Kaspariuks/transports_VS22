@@ -97,8 +97,11 @@ class _RealtimeVehiclesTabBody extends StatelessWidget {
   final List<VehiclePosition> vehiclePositions;
   final List<Trip> trips;
   final List<TransitRoute> routes;
+// tripd_id -> Trip
 
-  const _RealtimeVehiclesTabBody({
+
+
+  _RealtimeVehiclesTabBody({
     required this.vehiclePositions,
     required this.trips,
     required this.routes,
@@ -106,6 +109,7 @@ class _RealtimeVehiclesTabBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return TransitMap(
       center: defaultLatLng,
       vehiclePositionsLayer: VehiclePositionMarkersLayer(

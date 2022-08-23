@@ -9,11 +9,23 @@ class VehiclePositionMarkersLayer {
   final List<Trip> trips;
   final List<TransitRoute> routes;
 
+  late Map<String, Trip> tripLookup;
+  late Map<String, TransitRoute> routeLookup;
+
   VehiclePositionMarkersLayer({
     required this.vehiclePositions,
     required this.trips,
     required this.routes,
-  });
+  }) {
+    tripLookup = Map.fromIterables(
+      trips.map((t) => t.trip_id),
+      trips,
+    );
+    routeLookup = Map.fromIterables(
+      routes.map((t) => t.route_id),
+      routes,
+    );
+  }
 
   MarkerLayerOptions buildLayer() {
     return MarkerLayerOptions(
@@ -28,10 +40,16 @@ class VehiclePositionMarkersLayer {
             width: 20,
             height: 20,
             builder: (context) {
+              final trip = tripLookup[vehiclePosition.trip.tripId];
+              final route = routeLookup[route.route_id];
+              final routeNumber = trip?.route_id
+              final routeColor = route.route_short_name ?? ''
               // TODO: Exercise 7
-              return Icon(
-                Icons.directions_bus,
-                size: 15,
+
+
+              return CircleAvatar(
+                backgroundColor: routeColor,
+                child: Text(routeNumber),
               );
             },
           ),
