@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gtfs_db/gtfs_db.dart';
 import 'package:transit/database/database_service.dart';
 import 'package:transit/models/db.dart';
+import 'package:transit/navigator_routes.dart';
+import 'package:transit/screens/trip/trip_screen.dart';
 import 'package:transit/widgets/app_future_loader.dart';
 
 class StopScreen extends StatelessWidget {
@@ -60,21 +62,19 @@ class TripStopTimeListTile extends StatelessWidget {
     // TODO: Exercise 2 and 4
     final tripHeadSign = trip.trip_headsign ?? '';
     final routeLongName = route.route_long_name;
-    final routeNumber  = route.route_short_name ?? '';
+    final routeNumber = route.route_short_name ?? '';
     final routeColor = route.parsedRouteColor;
     final arrivalTime = stopTime.arrival_time;
-    return ListTile (
-      leading: CircleAvatar(
-        backgroundColor: routeColor,
-        child: Text (routeNumber),
+    return ListTile(
+        leading: CircleAvatar(
+          backgroundColor: routeColor,
+          child: Text(routeNumber),
 
-      ),
-      title: Text(tripHeadSign),
-      subtitle: Text(routeLongName),
-
-      trailing: Text(arrivalTime.substring(0, arrivalTime.length-3) ),
-
+        ),
+        title: Text(tripHeadSign),
+        subtitle: Text(routeLongName),
+        trailing: Text(arrivalTime.substring(0, arrivalTime.length - 3)),
+        onTap: () => Navigator.pushNamed(context, NavigatorRoutes.routeTrip, arguments: TripScreenArguments(route: route, trip: trip, stop: stop)),
     );
-
   }
 }
